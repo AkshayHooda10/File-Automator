@@ -15,6 +15,7 @@ dest_dir_video = "/Users/hooda/Downloads/Downloaded Video"
 dest_dir_image = "/Users/hooda/Downloads/Downloaded Images"
 dest_dir_documents = "/Users/hooda/Downloads/Downloaded Docs"
 source_dir_zipfiles = "/Users/hooda/Downloads/Downloaded Zips"
+source_dir_setups ="/Users/hooda/Downloads/Setups"
 
 
 
@@ -29,6 +30,8 @@ audio_extensions = [".m4a", ".flac", "mp3", ".wav", ".wma", ".aac"]
 document_extensions = [".doc", ".docx", ".odt",
                        ".pdf", ".xls", ".xlsx", ".ppt", ".pptx","zip"]
 code_extenstions = [".py", ".ipynb",".java"]
+
+setup_extensions = [".exe"]
 
 
 def make_unique(dest, name):
@@ -92,11 +95,16 @@ class MoverHandler(FileSystemEventHandler):
                 logging.info(f"Moved document file: {name}")
     
     def check_code_files(self, entry, name):  # * Checks all Code Files
-        for code_extensions in code_extenstions:
-            if name.endswith(code_extensions) or name.endswith(code_extensions.upper()):
-                move_file(dest_dir_documents, entry, name)
+        for code_extension in code_extenstions:
+            if name.endswith(code_extension) or name.endswith(code_extension.upper()):
+                move_file(source_dir_zipfiles, entry, name)
                 logging.info(f"Moved code file: {name}")
-
+    
+    def check_code_files(self, entry, name):  # * Checks all Setup Files
+        for setup_extension in setup_extensions:
+            if name.endswith(setup_extension) or name.endswith(setup_extension.upper()):
+                move_file(source_dir_setups, entry, name)
+                logging.info(f"Moved setup file: {name}")
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
